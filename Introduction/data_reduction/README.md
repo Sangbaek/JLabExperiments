@@ -1,6 +1,6 @@
 # data reduction examples
 
-## usage of the codes
+## how to run python scripts
 ```
 python drawCoinVolume.py
 python drawCoinHeight.py
