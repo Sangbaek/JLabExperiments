@@ -15,6 +15,9 @@ raw = True
 plotting = True
 fitting = True
 
+#plotting = False
+#fitting = False
+
 def fit_pulse(trace):
     # fit the highest peak -> find the highest value
     x_array = np.array(trace.xvalues)
@@ -132,6 +135,7 @@ for filename in sys.argv[1:]:
         continue
 
     if raw:
+        print ' Show the raw data.'
         plot_trace(trace)
         plt.show()
 
@@ -141,10 +145,12 @@ for filename in sys.argv[1:]:
     print ' Filename: %s,  Baseline: %10.6f,  Jitter: %10.6f'%(filename,baseline,jitter)
 
     if plotting:
+        print ' Show the data after finding a baseline and inverting the pulse.'
         plot_pulse(trace,baseline)
         plt.show()
         
     if fitting:
+        print ' Perform a fit and determine the Landau distribution parameters.'
         pname, par, pcov = fit_pulse(trace)
         plt.show()
         print " Fit results - Parameters: "
