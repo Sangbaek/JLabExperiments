@@ -16,12 +16,13 @@ Go to the JLabExperiments/Pulses directory and run analysis command
 
 * cd JLabExperiments/Pulses
 * ./python/analysis.py ./data/15181.CSV
-* Make sure to ‘delete the displayed windows’ to continue
-* Inspect the code and see how this works
+
+Make sure to ‘delete the displayed windows’ to continue. Inspect the code and see how this works
 * emacs ./python/analyze.py
 
 Analyze a full dataset (like data in ./data-a folder):
 
 * cd JLabExperiments/Pulses
 * ./python/analysis.py ./data-a/*
-* you might *not* want to fit for each dataset or even show the raw data or the cleaned up data, which can be changed easily using the included switches in the code (ex. plotting = False, fitting = False).
+
+you might *not* want to fit for each dataset or even show the raw data or the cleaned up data, which can be changed easily using the included switches in the code (ex. plotting = False, fitting = False).
