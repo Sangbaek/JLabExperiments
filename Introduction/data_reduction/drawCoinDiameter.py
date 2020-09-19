@@ -89,7 +89,8 @@ ax2.hist(studentData.coinDiameter, binEdges, color = 'b')
 
 for i, freq in enumerate(count):
 	if freq > 0:
-		ax2.errorbar(bincenters[i], count[i], xerr=binwidth/2., yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		# ax2.errorbar(bincenters[i], count[i], xerr=binwidth/2., yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		ax2.errorbar(bincenters[i], count[i], yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
 
 # Set the limits of axes.
 ax2.set_xlim(2, 2.55)
