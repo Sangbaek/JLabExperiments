@@ -22,7 +22,6 @@ ax1.set_xlabel('Coin diameter (cm)')
 ax1.set_ylabel('Student Name')
 
 dummyArray = np.arange(0,len(studentData.studentName),1) + 1
-studentData.unitConversion()
 
 quarterLabel = 0
 pennyLabel = 0
