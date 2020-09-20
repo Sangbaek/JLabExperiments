@@ -132,7 +132,7 @@ fig.suptitle("Measured coin volumes by 8.13 MWPM students")
 ax1 = fig.add_subplot(121)	
 
 #Set subplot title and labels of axes.
-ax1.set_title("Unbinned data")
+ax1.set_title("Raw data")
 ax1.set_xlabel('Coin volume (cm$^3$)')
 ax1.set_ylabel('Student name')
 
@@ -183,7 +183,7 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 # For those interested, ref: https://www.geeksforgeeks.org/copy-python-deep-copy-shallow-copy/
 
 
-# Done with unbinned data plotting.
+# Done with raw data plotting.
 
 # Now we're going to learn how to bin these data.
 # Sadly, we need to drop penny data this time.
@@ -198,9 +198,9 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 studentData.dropPenny()
 
-ax2 = fig.add_subplot(122)									# Another subplot to show unweighted histogram.
+ax2 = fig.add_subplot(122)									# Another subplot to show histogram.
 
-ax2.set_title("Binned data, unweighted")
+ax2.set_title("Histogram")
 ax2.set_xlabel('Coin volume (cm$^3$)')
 ax2.set_ylabel('Number of Entries')
 

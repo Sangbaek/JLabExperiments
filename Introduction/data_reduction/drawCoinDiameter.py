@@ -17,7 +17,7 @@ fig = plt.figure(figsize=(16,6))
 fig.suptitle("Measured coin diameters by 8.13 MWPM students")
 
 ax1 = fig.add_subplot(121)	
-ax1.set_title("Unbinned data")
+ax1.set_title("Raw data")
 ax1.set_xlabel('Coin diameter (cm)')
 ax1.set_ylabel('Student Name')
 
@@ -61,8 +61,8 @@ ax1.set_yticks(dummyArray)									# Lucky! just recycle dummyArray for y tick
 ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 
-# End of unbinned data plotting.
-# Start of binned data plotting.
+# End of raw data plotting.
+# Start of histogram plotting.
 # Refs:
 # 1. Bevington Ch. 4
 # 2. https://en.wikipedia.org/wiki/Weighted_arithmetic_mean#Variance_weights
@@ -73,9 +73,9 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 studentData.dropPenny()
 
-ax2 = fig.add_subplot(122)									# Another subplot to show unweighted histogram.
+ax2 = fig.add_subplot(122)									# Another subplot to show histogram.
 
-ax2.set_title("Binned data, unweighted")
+ax2.set_title("Histogram")
 ax2.set_xlabel('Coin diameter (cm)')
 ax2.set_ylabel('Number of Entries')
 
