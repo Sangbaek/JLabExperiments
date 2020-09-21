@@ -2,7 +2,7 @@
 
 ### Preparation
 
-* Install python (preferred 2.7 version)
+* Install python (preferred 2.7 version, but python3 also works)
 * Install special packages: numpy, matplotlib, scipy, pylandau
    * usually works: pip install numpy matplotlib scipy pylandau
 * Clone github repository: git clone https://github.com/JLabMit/JLabExperiments
