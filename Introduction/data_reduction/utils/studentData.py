@@ -71,28 +71,6 @@ class studentData():
 			self.coinType.append(columns[10])
 		self.file.close()
 
-	def unitConversion(self):
-		""" change mm^3 to cm^3
-		change mm to cm
-		"""
-		for i, unit in enumerate(self.coinVolumeUnit):
-			if unit == "mm^3":
-				self.coinVolumeUnit[i] = "cm^3"
-				self.coinVolume[i] = self.coinVolume[i] * 0.001
-				self.coinVolumeUncertainty[i] = self.coinVolumeUncertainty[i] * 0.001
-
-		for i, unit in enumerate(self.coinHeightUnit):
-			if unit == "mm":
-				self.coinHeightUnit[i] = "cm"
-				self.coinHeight[i] = self.coinHeight[i] * 0.1
-				self.coinHeightUncertainty[i] = self.coinHeightUncertainty[i] * 0.1
-
-		for i, unit in enumerate(self.coinDiameterUnit):
-			if unit == "mm":
-				self.coinDiameterUnit[i] = "cm"
-				self.coinDiameter[i] = self.coinDiameter[i] * 0.1
-				self.coinDiameterUncertainty[i] = self.coinDiameterUncertainty[i] * 0.1
-
 	def dropPenny(self):
 		"""remove the penny row for drawing histogram
 		"""

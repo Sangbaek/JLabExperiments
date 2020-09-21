@@ -94,28 +94,6 @@ class studentData():
 			self.coinType.append(columns[10])
 		self.file.close()
 
-	def unitConversion(self):
-		""" change mm^3 to cm^3
-		change mm to cm
-		"""
-		for i, unit in enumerate(self.coinVolumeUnit):
-			if unit == "mm^3":
-				self.coinVolumeUnit[i] = "cm^3"
-				self.coinVolume[i] = self.coinVolume[i] * 0.001
-				self.coinVolumeUncertainty[i] = self.coinVolumeUncertainty[i] * 0.001
-
-		for i, unit in enumerate(self.coinHeightUnit):
-			if unit == "mm":
-				self.coinHeightUnit[i] = "cm"
-				self.coinHeight[i] = self.coinHeight[i] * 0.1
-				self.coinHeightUncertainty[i] = self.coinHeightUncertainty[i] * 0.1
-
-		for i, unit in enumerate(self.coinDiameterUnit):
-			if unit == "mm":
-				self.coinDiameterUnit[i] = "cm"
-				self.coinDiameter[i] = self.coinDiameter[i] * 0.1
-				self.coinDiameterUncertainty[i] = self.coinDiameterUncertainty[i] * 0.1
-
 	def dropPenny(self):
 		"""remove the penny row for drawing histogram
 		"""
@@ -147,22 +125,19 @@ for i, name in enumerate(studentData.studentName):
 		 + str(studentData.coinVolumeUncertainty[i]) + ' ' + studentData.coinVolumeUnit[i])
 
 #Define the environment to draw plots
-fig = plt.figure(figsize=(24,6))	#create a canvas, 24 inches by 6 inches
+fig = plt.figure(figsize=(16,6))	#create a canvas, 24 inches by 6 inches
 fig.suptitle("Measured coin volumes by 8.13 MWPM students")
 
 #Often, it's useful to play with subplot on the canvas. 131 - 1 means number of rows, 3 means number of columns, the last 1 means that it's the first subplot
-ax1 = fig.add_subplot(131)	
+ax1 = fig.add_subplot(121)	
 
 #Set subplot title and labels of axes.
-ax1.set_title("Unbinned data")
+ax1.set_title("Raw data")
 ax1.set_xlabel('Coin volume (cm$^3$)')
 ax1.set_ylabel('Student name')
 
 #dummy y value for plotting
 dummyArray = np.arange(0,len(studentData.studentName),1) + 1
-
-# Now unify units for plotting.
-studentData.unitConversion()
 
 # Draw data by coin type
 quarterLegend = 0
@@ -208,7 +183,7 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 # For those interested, ref: https://www.geeksforgeeks.org/copy-python-deep-copy-shallow-copy/
 
 
-# Done with unbinned data plotting.
+# Done with raw data plotting.
 
 # Now we're going to learn how to bin these data.
 # Sadly, we need to drop penny data this time.
@@ -223,26 +198,24 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 studentData.dropPenny()
 
-ax2 = fig.add_subplot(132)									# Another subplot to show unweighted histogram.
+ax2 = fig.add_subplot(122)									# Another subplot to show histogram.
 
-ax2.set_title("Binned data, unweighted")
+ax2.set_title("Histogram")
 ax2.set_xlabel('Coin volume (cm$^3$)')
 ax2.set_ylabel('Number of Entries')
 
 count, binEdges = 	np.histogram(studentData.coinVolume, np.arange(0.35, 0.9501, 0.1))
 bincenters 		=	0.5*(binEdges[1:]+binEdges[:-1])
 countStd		=	np.sqrt(count)
-
-inverse_variance								= 1/np.array(studentData.coinVolumeUncertainty)**2
-inverse_variance_sum_each_bin 					= np.histogram(studentData.coinVolume, binEdges, weights=inverse_variance)[0]
-contribution_to_uncertainty_of_weighted_average	= 1/np.sqrt(inverse_variance_sum_each_bin)	# this works as horizontal error bars.
+binwidth		=	binEdges[1] - binEdges[0]
 
 ax2.hist(studentData.coinVolume, binEdges, color = 'b')
 
 # Indicate error bars!
 for i, freq in enumerate(count):
 	if freq > 0:
-		ax2.errorbar(bincenters[i], count[i], xerr = contribution_to_uncertainty_of_weighted_average[i], yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		# ax2.errorbar(bincenters[i], count[i], xerr=binwidth/2., yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		ax2.errorbar(bincenters[i], count[i], yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
 
 # Set the limits of axes.
 ax2.set_xlim(0, 1.8)
@@ -257,39 +230,6 @@ ax2.set_xticks(xticks_minor, minor=True)					# minor x ticks
 ax2.set_xticklabels(xticklabels)							# , and x tick labels.
 ax2.set_yticks([0, 1, 2, 3, 4, 5])							
 ax2.set_yticklabels(['0', '1', '2', '3', '4', '5'])				# apply y tick labels
-
-
-# Now consider inverse variance weighting
-
-ax3 = fig.add_subplot(133)									# the last subplot to show weighted histogram.
-
-ax3.set_title("Binned data, weighted")
-ax3.set_xlabel('Coin volume (cm$^3$)')
-ax3.set_ylabel(r'Sum of weights(1/$\sigma_i^2$) per bin (unit?)')
-
-
-weights 							= inverse_variance  	# predefined for ax2
-weights_sum_each_bin 				= inverse_variance_sum_each_bin	# predefined for ax2
-
-weights_squared			 			= weights**2	# a trick to get vertical error bars.
-weights_sum_each_bin_uncertainty	= np.sqrt(np.histogram(studentData.coinVolume, binEdges, weights=weights_squared)[0])
-
-ax3.hist(studentData.coinVolume, binEdges, weights=weights, color = 'b', log=True)
-# Indicate error bars!
-for i, freq in enumerate(weights_sum_each_bin):
-	if freq > 0:
-		ax3.errorbar(bincenters[i], weights_sum_each_bin[i], xerr=contribution_to_uncertainty_of_weighted_average[i], yerr=weights_sum_each_bin_uncertainty[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
-
-# Set the limits of axes.
-ax3.set_xlim(0, 1.8)
-ax3.set_ylim(1, 50000)
-
-# Set the ticks of axes.
-ax3.set_xticks(xticks_major)								# apply major x ticks, predefined for ax2
-ax3.set_xticks(xticks_minor, minor=True)					# minor x ticks
-ax3.set_xticklabels(xticklabels)							# , and x tick labels.
-ax3.set_yticks([1, 10, 100, 1000, 10000])							
-ax3.set_yticklabels(['1','10','10'+'$^2$','10'+'$^3$','10'+'$^4$'])				# apply y tick labels
 
 # Remove all margins!
 plt.tight_layout()

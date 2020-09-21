@@ -13,16 +13,15 @@ from utils.studentData import * # This is the module I'd like to use.
 
 studentData = studentData("data/coinData.dat", 1)
 
-fig = plt.figure(figsize=(24,6))
+fig = plt.figure(figsize=(16,6))
 fig.suptitle("Measured coin diameters by 8.13 MWPM students")
 
-ax1 = fig.add_subplot(131)	
-ax1.set_title("Unbinned data")
+ax1 = fig.add_subplot(121)	
+ax1.set_title("Raw data")
 ax1.set_xlabel('Coin diameter (cm)')
 ax1.set_ylabel('Student Name')
 
 dummyArray = np.arange(0,len(studentData.studentName),1) + 1
-studentData.unitConversion()
 
 quarterLabel = 0
 pennyLabel = 0
@@ -62,8 +61,8 @@ ax1.set_yticks(dummyArray)									# Lucky! just recycle dummyArray for y tick
 ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 
-# End of unbinned data plotting.
-# Start of binned data plotting.
+# End of raw data plotting.
+# Start of histogram plotting.
 # Refs:
 # 1. Bevington Ch. 4
 # 2. https://en.wikipedia.org/wiki/Weighted_arithmetic_mean#Variance_weights
@@ -74,25 +73,23 @@ ax1.set_yticklabels(deepcopy(studentData.studentName))		# apply y tick labels
 
 studentData.dropPenny()
 
-ax2 = fig.add_subplot(132)									# Another subplot to show unweighted histogram.
+ax2 = fig.add_subplot(122)									# Another subplot to show histogram.
 
-ax2.set_title("Binned data, unweighted")
+ax2.set_title("Histogram")
 ax2.set_xlabel('Coin diameter (cm)')
 ax2.set_ylabel('Number of Entries')
 
 count, binEdges = 	np.histogram(studentData.coinDiameter, np.arange(2, 2.55, 0.05))
 bincenters 		=	0.5*(binEdges[1:]+binEdges[:-1])
 countStd		=	np.sqrt(count)
-
-inverse_variance								= 1/np.array(studentData.coinDiameterUncertainty)**2
-inverse_variance_sum_each_bin 					= np.histogram(studentData.coinDiameter, binEdges, weights=inverse_variance)[0]
-contribution_to_uncertainty_of_weighted_average	= 1/np.sqrt(inverse_variance_sum_each_bin)	# this works as horizontal error bars.
+binwidth		=	binEdges[1] - binEdges[0]
 
 ax2.hist(studentData.coinDiameter, binEdges, color = 'b')
 
 for i, freq in enumerate(count):
 	if freq > 0:
-		ax2.errorbar(bincenters[i], count[i], xerr=contribution_to_uncertainty_of_weighted_average[i], yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		# ax2.errorbar(bincenters[i], count[i], xerr=binwidth/2., yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
+		ax2.errorbar(bincenters[i], count[i], yerr=countStd[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
 
 # Set the limits of axes.
 ax2.set_xlim(2, 2.55)
@@ -107,40 +104,6 @@ ax2.set_xticks(xticks_minor, minor=True)					# minor x ticks
 ax2.set_xticklabels(xticklabels)							# , and x tick labels.
 ax2.set_yticks([0, 1, 2, 3, 4, 5, 6, 7, 8])							
 ax2.set_yticklabels(['0', '1', '2', '3', '4', '5', '6', '7', '8'])				# apply y tick labels
-
-# Now consider inverse variance weighting
-ax3 = fig.add_subplot(133)									# the last subplot to show weighted histogram.
-
-ax3.set_title("Binned data, weighted")
-ax3.set_xlabel('Coin diameter (cm)')
-ax3.set_ylabel(r'Sum of weights per bin ($\sum\limits_{i}$ 1/$\sigma_i^2$) (unit?)')
-
-weights 							= inverse_variance
-weights_sum_each_bin 				= inverse_variance_sum_each_bin
-
-weights_squared			 			= weights**2	# a trick to get vertical error bars.
-weights_sum_each_bin_uncertainty	= np.sqrt(np.histogram(studentData.coinDiameter, binEdges, weights=weights_squared)[0])
-
-ax3.hist(studentData.coinDiameter, binEdges, color = 'b', weights=weights)
-# Indicate error bars!
-for i, freq in enumerate(weights_sum_each_bin):
-	if freq > 0:
-		ax3.errorbar(bincenters[i], weights_sum_each_bin[i], xerr=contribution_to_uncertainty_of_weighted_average[i], yerr=weights_sum_each_bin_uncertainty[i], color='k', marker='.', markersize=5,capsize=3,lw=2)
-
-# Set the limits of axes.
-ax3.set_xlim(2, 2.55)
-ax3.set_ylim(0, 10000)
-
-# Set the ticks of axes.
-xticks_major 	= np.arange(2, 2.5501, 0.1)						# manually set up a major ticks
-xticklabels	 	= ["%.1f" % number for number in xticks_major] # don't want math fonts for tick labels. convert ticks to string array.
-xticks_minor 	= np.arange(2, 2.5501, 0.02)					# minor ticks
-ax3.set_xticks(xticks_major)								# apply major x ticks,
-ax3.set_xticks(xticks_minor, minor=True)					# minor x ticks
-ax3.set_xticklabels(xticklabels)							# , and x tick labels.
-ax3.set_yticks([0, 2000, 4000, 6000, 8000, 10000])							
-ax3.set_yticklabels(['0', '2000', '4000', '6000', '8000', '10000'])				# apply y tick labels
-ax3.set_yticks(np.arange(0,10000,500), minor=True)							
 
 # Remove all margins!
 plt.tight_layout()

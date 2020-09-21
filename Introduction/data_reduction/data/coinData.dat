@@ -1,9 +1,9 @@
 Student Name	diameter	uncertainty	unit	height	uncertainty	unit	Volume	Uncertainty	Unit	Coin Type	Original Text (slightly edited by TA)
-John Shackleton	2.35	0.05	cm	0.17	0.01	cm	0.744	0.081096	cm^3	quarter	Volume: 0.744cm^3 +- 10.9% Diameter: 2.35 +/- 0.05 cm. Height: 0.17 +/- 0.01 cm
-Jiahui Du	2.43	0.05	cm	0.15	0.02	cm	0.696	0.1	cm^3	quarter	d=2.43 cm +- 0.05 cm h=0.15cm +- 0.02cm V=0.696cm^3 +- 0.10 cm^3
-Raymond Wynne	2.4	0.02	cm	0.18	0.005	cm	0.814	0.021	cm^3	quarter	V = 0.814 cm^3, sigma_V = 0.021 cm^3 r = 1.20 cm, sigma_r = 0.01 cm h = 0.18 cm, sigma_h = 0.005 cm
-Bereket Sintayehu	2.4	0.2	cm	0.2	0.1	cm	0.9	0.8	cm^3	quarter	Volume=0.9cm^3 +- 0.8cm^3 Radius=1.2 cm +- 0.1cm Height = 0.2 cm +-0.1cm 
+John Shackleton	23.5	0.5	mm	1.7	0.1	mm	744	81.096	mm^3	quarter	Volume: 0.744cm^3 +- 10.9% Diameter: 2.35 +/- 0.05 cm. Height: 0.17 +/- 0.01 cm
+Devany Du	24.3	0.5	mm	1.5	0.2	mm	696	100	mm^3	quarter	d=2.43 cm +- 0.05 cm h=0.15cm +- 0.02cm V=0.696cm^3 +- 0.10 cm^3
+Raymond Wynne	24	0.2	mm	1.8	0.05	mm	814	21	mm^3	quarter	V = 0.814 cm^3, sigma_V = 0.021 cm^3 r = 1.20 cm, sigma_r = 0.01 cm h = 0.18 cm, sigma_h = 0.005 cm
+Bereket Sintayehu	24	2	mm	2	1	mm	900	800	mm^3	quarter	Volume=0.9cm^3 +- 0.8cm^3 Radius=1.2 cm +- 0.1cm Height = 0.2 cm +-0.1cm 
 Quinn Brodsky	20.5	0.5	mm	1.5	0.5	mm	495.1	9.5	mm^3	quarter	d=20.5mm+/-0.5mm, h=1.5mm+/-0.5mm, V=495.1mm^3+/-9.5mm^3
-Serhii Kryhin	1.756	0.008	cm	0.136	0.004	cm	0.33	0.01	cm^3	penny	radius of one cent coin: 0.878 +- 0.004 cm Thickness of one coin: 0.136 +- 0.004 cm Volume of one coin: 0.33 +- 0.01 cm^3 The radius is calculated with ruler using 7 coins put in a row. The thickness in calculated with ruler using 14 coins put together.
+Serhii Kryhin	17.56	0.08	mm	1.36	0.04	cm	330	10	mm^3	penny	radius of one cent coin: 0.878 +- 0.004 cm Thickness of one coin: 0.136 +- 0.004 cm Volume of one coin: 0.33 +- 0.01 cm^3 The radius is calculated with ruler using 7 coins put in a row. The thickness in calculated with ruler using 14 coins put together.
 Zackary Gromko	24.1	0.2	mm	1.72	0.03	mm	780	30	mm^3	quarter	thickness of 6 quarters: 10.3 +- 0.2mm width of 6 quarters: 144 +- 1.0mm thickness of 1 quarter: 1.72+-0.03mm diameter of 1 quarter: 24.1 +- 0.2mm Volume of 1 quarter: 780 +- 30mm^3
-Maya Reese	24	0.5	mm	1.5	0.5	mm	0.679	0.28	mL	quarter	Volume: 0.679mL +- 0.28mL diameter: 24 mm +- 0.5mm  height: 1.5 mm +- 0.5 mm
+Maya Reese	24	0.5	mm	1.5	0.5	mm	679	280	mL	quarter	Volume: 0.679mL +- 0.28mL diameter: 24 mm +- 0.5mm  height: 1.5 mm +- 0.5 mm
