@@ -118,12 +118,12 @@ def plot_trace(trace):
 # initial settings
 mlp.rcParams['axes.linewidth'] = 2
 
-print " Analysing: %d files as given in the command line"%(len(sys.argv[1:]))
+print(" Analysing: %d files as given in the command line"%(len(sys.argv[1:])))
 
 for filename in sys.argv[1:]:
 
     # read the raw data
-    print " File: %s"%(filename)
+    print(" File: %s"%(filename))
     with open(filename,"r") as file:
         data = file.read()
 
@@ -131,32 +131,32 @@ for filename in sys.argv[1:]:
     trace = ScopeTrace.ScopeTrace(data,merge_bins)
     x_array = np.array(trace.xvalues)
     if trace.reading_error>1 or len(trace.yvalues)<10:
-        print " WARNING -- skipping this file has reading errors: %s"%(filename)
+        print(" WARNING -- skipping this file has reading errors: %s"%(filename))
         continue
 
     if raw:
-        print ' Show the raw data.'
+        print(' Show the raw data.')
         plot_trace(trace)
         plt.show()
 
     # find baseline and jitter
     baseline,jitter = trace.find_baseline_and_jitter(0,250)
     
-    print ' Filename: %s,  Baseline: %10.6f,  Jitter: %10.6f'%(filename,baseline,jitter)
+    print(' Filename: %s,  Baseline: %10.6f,  Jitter: %10.6f'%(filename,baseline,jitter))
 
     if plotting:
-        print ' Show the data after finding a baseline and inverting the pulse.'
+        print(' Show the data after finding a baseline and inverting the pulse.')
         plot_pulse(trace,baseline)
         plt.show()
         
     if fitting:
-        print ' Perform a fit and determine the Landau distribution parameters.'
+        print(' Perform a fit and determine the Landau distribution parameters.')
         pname, par, pcov = fit_pulse(trace)
         plt.show()
-        print " Fit results - Parameters: "
-        print par
-        print " Fit results - Covariance matrix: "
-        print pcov
-        print " ========================================"
+        print(" Fit results - Parameters: ")
+        print(par)
+        print(" Fit results - Covariance matrix: ")
+        print(pcov)
+        print(" ========================================")
         for i in range(0,len(par)):
-            print " P(%d,%9s) = %f +- %f"%(i,pname[i],par[i],np.sqrt(pcov[i][i]))
+            print(" P(%d,%9s) = %f +- %f"%(i,pname[i],par[i],np.sqrt(pcov[i][i])))
