@@ -38,7 +38,7 @@ class ScopeTrace:
                 f = line.split(',')
                 if len(f)<5:
                     if line != '':
-                        print ' Skipping line: %s'%line
+                        print(' Skipping line: %s'%line)
                     continue
                 
                 x += float(i)
@@ -53,7 +53,7 @@ class ScopeTrace:
                     y = 0
                 i += 1
             except:
-                print ' ERROR - reading file: '+ line
+                print(' ERROR - reading file: '+ line)
                 self.reading_error += 1
             
     def find_value(self,name,data,type="f"):
@@ -63,13 +63,13 @@ class ScopeTrace:
             if f[0] == name:
                 if   type == 'f':
                     value = float(f[1])
-                    #print " Value[%s]  %f (F)"%(name,value)
+                    #print(" Value[%s]  %f (F)"%(name,value))
                 elif type == 'i':
                     value = int(f[1])
-                    #print " Value[%s]  %d (I)"%(name,value)
+                    #print(" Value[%s]  %d (I)"%(name,value))
                 else:
                     value = f[1]
-                    #print " Value[%s]  %s (S)"%(name,value)
+                    #print(" Value[%s]  %s (S)"%(name,value))
                 break
         return value
 
@@ -111,20 +111,20 @@ class ScopeTrace:
         return n_pulses_found 
 
     def inverted(self):
-	baseline = self.find_baseline_and_jitter(self.xvalues[0], self.trigger_point)[0]
-	return [-(val-baseline) for val in self.yvalues]
+        baseline,jitter = self.find_baseline_and_jitter(self.xvalues[0],self.trigger_point)
+        return [-(val-baseline) for val in self.yvalues]
 
     def reset_adcs(self):
-	self.yvalues = [0 for val in self.yvalues]
-	return
+        self.yvalues = [0 for val in self.yvalues]
+        return
     
     def add_adcs(self,yvalues,invert=False):
         for i in range(0,len(yvalues)):
             if invert:
                 self.yvalues[i] -= yvalues[i]
             else:
-	        self.yvalues[i] += yvalues[i]
-	return 
+                self.yvalues[i] += yvalues[i]
+        return 
 
     def write_trace(self,file_name):
         with open(file_name,"w") as fh:
